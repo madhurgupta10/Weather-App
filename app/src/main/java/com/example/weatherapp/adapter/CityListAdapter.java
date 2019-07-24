@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.weatherapp.R;
 import com.example.weatherapp.model.City;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -49,9 +51,12 @@ public class CityListAdapter extends BaseAdapter {
 
         TextView cityNameTextView = view.findViewById(R.id.city_name);
         TextView countryNameTextView = view.findViewById(R.id.country_name);
+        ImageView artworkImageView = view.findViewById(R.id.artwork_image);
 
         cityNameTextView.setText(city.getName());
         countryNameTextView.setText(city.getCountry());
+
+        Picasso.with(mContext).load(city.getArtworkUrl()).into(artworkImageView);
 
         view.setOnClickListener(new View.OnClickListener() {
 
