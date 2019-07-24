@@ -1,6 +1,5 @@
 package com.example.weatherapp.model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -8,7 +7,7 @@ public class WeatherInfo {
 
     @SerializedName("@context")
     @Expose
-    private List<String> context = null;
+    private java.lang.Object context = null;
 
     @SerializedName("type")
     @Expose
@@ -22,11 +21,11 @@ public class WeatherInfo {
     @Expose
     private Properties properties;
 
-    public List<String> getContext() {
+    public Object getContext() {
         return context;
     }
 
-    public void setContext(List<String> context) {
+    public void setContext(Object context) {
         this.context = context;
     }
 

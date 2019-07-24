@@ -1,18 +1,27 @@
 package com.example.weatherapp.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.weatherapp.R;
+import com.example.weatherapp.client.RetrofitApiClientInstance;
 import com.example.weatherapp.model.City;
+import com.example.weatherapp.model.WeatherInfo;
+import com.example.weatherapp.service.GetDataService;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CityListAdapter extends BaseAdapter {
 
@@ -62,6 +71,20 @@ public class CityListAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
+                GetDataService service = RetrofitApiClientInstance
+                        .getRetrofitInstance().create(GetDataService.class);
+                Call<WeatherInfo> call = service.getWeatherInfo(city.getLongi()+","+city.getLati());
+                call.enqueue(new Callback<WeatherInfo>() {
+                    @Override
+                    public void onResponse(Call<WeatherInfo> call, Response<WeatherInfo> response) {
+                        Toast.makeText(mContext, ""+response.body().getProperties().getPeriods().get(0).getTemperature(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<WeatherInfo> call, Throwable t) {
+                        Log.d("RETRO", "onFailure: "+t);
+                    }
+                });
             }
 
         });

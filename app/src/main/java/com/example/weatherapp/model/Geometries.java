@@ -12,7 +12,7 @@ public class Geometries {
 
     @SerializedName("coordinates")
     @Expose
-    private List<Double> coordinates = null;
+    private java.lang.Object coordinates = null;
 
     public String getType() {
         return type;
@@ -22,7 +22,7 @@ public class Geometries {
         this.type = type;
     }
 
-    public List<Double> getCoordinates() {
+    public java.lang.Object getCoordinates() {
         return coordinates;
     }
 
