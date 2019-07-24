@@ -1,6 +1,7 @@
 package com.example.weatherapp;
 
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
@@ -24,25 +25,35 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
 
     private GoogleMap mMap;
     private City city;
+    
+//    @BindView(R.id.temp)
+    TextView temperatureTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+//        ButterKnife.bind(this);
+
+        temperatureTextView = findViewById(R.id.temp);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        // Gets the city object from the intent.
         City city = (City) getIntent().getSerializableExtra("CityObject");
         if (city != null) {
+
             this.city = city;
+
             callApi(city.getLongi(), city.getLati());
         }
 
     }
 
+    // This method will invoke the API and fetch the response.
     private void callApi(double longi, double lati) {
         String coordinate = longi + "," + lati;
 
@@ -52,11 +63,18 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
         call.enqueue(new Callback<WeatherInfo>() {
             @Override
             public void onResponse(Call<WeatherInfo> call, Response<WeatherInfo> response) {
-                Toast.makeText(WeatherActivity.this, ""+response.body().getProperties().getPeriods().get(0).getTemperature(), Toast.LENGTH_SHORT).show();
+                setViews(response.body());
+            }
+
+            private void setViews(WeatherInfo body) {
+                //cityNameTextView.setText(city.getName());
+                temperatureTextView.setText(body.getProperties().getPeriods().get(0).getTemperature().toString());
             }
 
             @Override
-            public void onFailure(Call<WeatherInfo> call, Throwable t) {
+            public void onFailure(Call<WeatherInfo> call, Throwable throwable) {
+                Toast.makeText(WeatherActivity.this,
+                        R.string.went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
     }
