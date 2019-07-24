@@ -48,10 +48,10 @@ public class Cities {
     }
 
 
-    /* addCity method creates and returns a new City object.
-    *  It accepts five parameters city name, country name, artwork url, longitude and latitude coordinates.
-    *  The artwork url is concatenated with the base url of dribble cdn before returning the object.
-    * */
+    /** addCity method creates and returns a new City object.
+     *  It accepts five parameters city name, country name, artwork url, longitude and latitude coordinates.
+     *  The artwork url is concatenated with the base url of dribble cdn before returning the object.
+     */
     public static City addCity(String cityName, String countryName, String artworkUrl,
                                double longi, double lati) {
 

@@ -5,10 +5,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitApiClientInstance {
 
-    /*
-    * Retrofit Client Instance class is implemented which will build the http request.
-    * This also reads the JSON stream of data and parse it to Java Objects using GSON library.
-    * */
+    /**
+     * Retrofit Client Instance class is implemented which will build the http request.
+     * This also reads the JSON stream of data and parse it to Java Objects using GSON library.
+     */
 
     private static Retrofit retrofit;
     private static final String BASE_URL = "https://api.weather.gov/";
