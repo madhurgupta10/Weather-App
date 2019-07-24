@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weatherapp.adapter.CityListAdapter;
+import com.example.weatherapp.model.Cities;
 import com.example.weatherapp.model.City;
 
 import java.util.ArrayList;
@@ -33,9 +34,7 @@ public class MainActivity extends AppCompatActivity {
         if (cities.size() > 0) {
 
             CityListAdapter adapter = new CityListAdapter(this, cities);
-
             cityListView = findViewById(R.id.city_list_view);
-
             cityListView.setAdapter(adapter);
 
         } else {

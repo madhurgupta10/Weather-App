@@ -1,6 +1,4 @@
-package com.example.weatherapp;
-
-import com.example.weatherapp.model.City;
+package com.example.weatherapp.model;
 
 import java.util.ArrayList;
 
