@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -44,9 +45,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorWhiteText"
-                android:textSize="30sp"
+                android:textSize="18sp"
                 android:layout_margin="20dp"
                 android:gravity="bottom|end"
+                android:padding="5dp"
                 android:id="@+id/info"/>
 
         </LinearLayout>
@@ -87,7 +89,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:id="@+id/weather_recycler">
         </androidx.recyclerview.widget.RecyclerView>
 

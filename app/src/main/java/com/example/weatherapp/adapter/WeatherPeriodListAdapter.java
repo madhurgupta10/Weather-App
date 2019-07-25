@@ -18,13 +18,19 @@ public class WeatherPeriodListAdapter extends RecyclerView.Adapter<WeatherPeriod
 
     private List<Period> periods = new ArrayList<Period>();
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView;
+        TextView tempTextView;
+        TextView unitTextView;
+        TextView dateTextView;
+        TextView forecastTextView;
 
-        public MyViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
-            this.textView = itemView.findViewById(R.id.temperature);
+            this.tempTextView = itemView.findViewById(R.id.temp);
+            this.unitTextView = itemView.findViewById(R.id.unit);
+            this.dateTextView = itemView.findViewById(R.id.date);
+            this.forecastTextView = itemView.findViewById(R.id.forecast);
         }
     }
 
@@ -43,8 +49,17 @@ public class WeatherPeriodListAdapter extends RecyclerView.Adapter<WeatherPeriod
 
     @Override
     public void onBindViewHolder(@NonNull WeatherPeriodListAdapter.MyViewHolder holder, int position) {
-        TextView textViewName = holder.textView;
-        textViewName.setText(periods.get(position).getTemperature().toString());
+
+        TextView nameTextView = holder.tempTextView;
+        TextView unitTextView = holder.unitTextView;
+        TextView dateTextView = holder.dateTextView;
+        TextView forecastTextView = holder.forecastTextView;
+
+        // Setting the values for each view.
+        nameTextView.setText(periods.get(position).getTemperature().toString());
+        unitTextView.setText(periods.get(position).getTemperatureUnit());
+        dateTextView.setText(periods.get(position).getName());
+        forecastTextView.setText(periods.get(position).getDetailedForecast());
     }
 
     @Override

@@ -49,6 +49,7 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
+        // Finds the view using their Ids.
         temperatureTextView = findViewById(R.id.temp);
         unitTextView = findViewById(R.id.unit);
         cityNameTextView = findViewById(R.id.name);
@@ -95,16 +96,24 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
                 setViews(response.body());
             }
 
+            // Set the Views with their required values.
             private void setViews(WeatherInfo body) {
                 temperatureTextView.setText(body.getProperties().getPeriods().get(0)
                         .getTemperature().toString());
                 infoTextView.setText(body.getProperties().getPeriods().get(0).getShortForecast());
                 cityNameTextView.setText(city.getName());
-                unitTextView.setText(R.string.unit_F);
+                unitTextView.setText(body.getProperties().getPeriods().get(0).getTemperatureUnit());
                 dateTextView.setText(getCurrentDate());
                 setRecyclerView(weatherCardRecyclerView, body.getProperties().getPeriods());
             }
 
+            /**
+             * This method, sets the recycler view and accepts the two parameters.
+             * @param weatherCardRecyclerView
+             * @param periods
+             * Periods is a List with weather information.
+             * We are using a custom adapter to set the recycler view and in Horizontal Scroll View.
+             */
             private void setRecyclerView(RecyclerView weatherCardRecyclerView,
                                          List<Period> periods) {
                 WeatherPeriodListAdapter weatherPeriodListAdapter = new WeatherPeriodListAdapter(periods);
