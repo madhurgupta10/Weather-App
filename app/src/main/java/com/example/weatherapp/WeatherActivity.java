@@ -1,6 +1,8 @@
 package com.example.weatherapp;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,17 +27,24 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
 
     private GoogleMap mMap;
     private City city;
-    
-//    @BindView(R.id.temp)
+
     TextView temperatureTextView;
+    TextView unitTextView;
+    TextView cityNameTextView;
+    RelativeLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-//        ButterKnife.bind(this);
 
         temperatureTextView = findViewById(R.id.temp);
+        unitTextView = findViewById(R.id.unit);
+        cityNameTextView = findViewById(R.id.name);
+
+        container = findViewById(R.id.container);
+
+        startGradientAnimation(container);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -44,13 +53,19 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
 
         // Gets the city object from the intent.
         City city = (City) getIntent().getSerializableExtra("CityObject");
+
         if (city != null) {
-
             this.city = city;
-
             callApi(city.getLongi(), city.getLati());
         }
 
+    }
+
+    private void startGradientAnimation(RelativeLayout container) {
+        AnimationDrawable animationDrawable = (AnimationDrawable) container.getBackground();
+        animationDrawable.setEnterFadeDuration(100);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
     }
 
     // This method will invoke the API and fetch the response.
@@ -67,8 +82,9 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
             }
 
             private void setViews(WeatherInfo body) {
-                //cityNameTextView.setText(city.getName());
                 temperatureTextView.setText(body.getProperties().getPeriods().get(0).getTemperature().toString());
+                cityNameTextView.setText(city.getName());
+                unitTextView.setText(R.string.unit_F);
             }
 
             @Override
@@ -94,8 +110,7 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
         if (city != null) {
             // Add a marker and move the camera
             LatLng latLng = new LatLng(city.getLongi(), city.getLati());
-            mMap.addMarker(new MarkerOptions().position(latLng)
-                    .title(String.format("Marker in %s", city.getName())));
+            mMap.addMarker(new MarkerOptions().position(latLng).title(city.getName()));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10F));
         }
     }

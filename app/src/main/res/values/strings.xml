@@ -2,4 +2,5 @@
     <string name="app_name">Weather App</string>
     <string name="no_info">Sorry! No Information</string>
     <string name="went_wrong">Sorry! Something Went Wrong</string>
+    <string name="unit_F">F</string>
 </resources>
