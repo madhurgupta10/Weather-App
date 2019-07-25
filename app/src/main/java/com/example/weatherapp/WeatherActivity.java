@@ -7,9 +7,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.weatherapp.adapter.WeatherPeriodListAdapter;
 import com.example.weatherapp.client.RetrofitApiClientInstance;
 import com.example.weatherapp.model.City;
+import com.example.weatherapp.model.Period;
 import com.example.weatherapp.model.WeatherInfo;
 import com.example.weatherapp.service.GetDataService;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,7 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,12 +36,13 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private City city;
 
-    TextView temperatureTextView;
-    TextView unitTextView;
-    TextView cityNameTextView;
-    TextView infoTextView;
-    TextView dateTextView;
-    RelativeLayout container;
+    private TextView temperatureTextView;
+    private TextView unitTextView;
+    private TextView cityNameTextView;
+    private TextView infoTextView;
+    private TextView dateTextView;
+    private RelativeLayout container;
+    private RecyclerView weatherCardRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,7 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
         dateTextView = findViewById(R.id.date);
 
         container = findViewById(R.id.container);
+        weatherCardRecyclerView = findViewById(R.id.weather_recycler);
 
         startGradientAnimation(container);
 
@@ -90,13 +96,26 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
             }
 
             private void setViews(WeatherInfo body) {
-                temperatureTextView.setText(body.getProperties().getPeriods().get(0).getTemperature().toString());
+                temperatureTextView.setText(body.getProperties().getPeriods().get(0)
+                        .getTemperature().toString());
                 infoTextView.setText(body.getProperties().getPeriods().get(0).getShortForecast());
                 cityNameTextView.setText(city.getName());
                 unitTextView.setText(R.string.unit_F);
                 dateTextView.setText(getCurrentDate());
+                setRecyclerView(weatherCardRecyclerView, body.getProperties().getPeriods());
             }
 
+            private void setRecyclerView(RecyclerView weatherCardRecyclerView,
+                                         List<Period> periods) {
+                WeatherPeriodListAdapter weatherPeriodListAdapter = new WeatherPeriodListAdapter(periods);
+                LinearLayoutManager horizontalLayoutManagaer
+                        = new LinearLayoutManager(WeatherActivity.this,
+                        LinearLayoutManager.HORIZONTAL, false);
+                weatherCardRecyclerView.setLayoutManager(horizontalLayoutManagaer);
+                weatherCardRecyclerView.setAdapter(weatherPeriodListAdapter);
+            }
+
+            // Returns the current date of the device in date month year format.
             private String getCurrentDate() {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
