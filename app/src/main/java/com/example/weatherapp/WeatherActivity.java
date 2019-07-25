@@ -76,6 +76,7 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
 
     }
 
+    // Sets the Background Gradient Animation.
     private void startGradientAnimation(RelativeLayout container) {
         AnimationDrawable animationDrawable = (AnimationDrawable) container.getBackground();
         animationDrawable.setEnterFadeDuration(100);
