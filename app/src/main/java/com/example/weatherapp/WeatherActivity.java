@@ -19,6 +19,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +35,8 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
     TextView temperatureTextView;
     TextView unitTextView;
     TextView cityNameTextView;
+    TextView infoTextView;
+    TextView dateTextView;
     RelativeLayout container;
 
     @Override
@@ -41,6 +47,8 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
         temperatureTextView = findViewById(R.id.temp);
         unitTextView = findViewById(R.id.unit);
         cityNameTextView = findViewById(R.id.name);
+        infoTextView = findViewById(R.id.info);
+        dateTextView = findViewById(R.id.date);
 
         container = findViewById(R.id.container);
 
@@ -83,8 +91,16 @@ public class WeatherActivity extends FragmentActivity implements OnMapReadyCallb
 
             private void setViews(WeatherInfo body) {
                 temperatureTextView.setText(body.getProperties().getPeriods().get(0).getTemperature().toString());
+                infoTextView.setText(body.getProperties().getPeriods().get(0).getShortForecast());
                 cityNameTextView.setText(city.getName());
                 unitTextView.setText(R.string.unit_F);
+                dateTextView.setText(getCurrentDate());
+            }
+
+            private String getCurrentDate() {
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+                return df.format(calendar.getTime());
             }
 
             @Override

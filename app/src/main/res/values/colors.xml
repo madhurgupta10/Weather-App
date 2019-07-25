@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorWhiteText">#FFFFFF</color>
+    <color name="gradient_1_start_color">#009688</color>
+    <color name="gradient_1_end_color">#4CAF50</color>
+    <color name="gradient_2_start_color">#8BC34A</color>
+    <color name="gradient_2_end_color">#009688</color>
+    <color name="gradient_3_start_color">#4CAF50</color>
+    <color name="gradient_3_end_color">#8BC34A</color>
 </resources>
