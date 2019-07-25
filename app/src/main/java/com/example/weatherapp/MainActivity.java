@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.city_list_view)
     ListView cityListView;
 
+    private CityListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         // Check if list is non empty
         if (cities.size() > 0) {
 
-            CityListAdapter adapter = new CityListAdapter(this, cities);
+            adapter = new CityListAdapter(this, cities);
             cityListView = findViewById(R.id.city_list_view);
             cityListView.setAdapter(adapter);
 
